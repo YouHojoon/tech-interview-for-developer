@@ -176,6 +176,6 @@ t2 : 프로세스1은 자원2를 기다림 / 프로세스2는 자원1을 기다�
 
 
 
-> 참고
-> https://suhwanc.tistory.com/181
+> 참고<br>
+> https://suhwanc.tistory.com/181 <br>
 > https://will-behappy.tistory.com/23
