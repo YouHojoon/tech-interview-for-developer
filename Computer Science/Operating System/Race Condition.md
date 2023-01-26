@@ -25,3 +25,55 @@
 
    
 
+### 대표적인 문제
+
+#### Reader-Writer Probleme
+
+데이터셋을 프로세스가 공유한다고 가정한다.
+- Reader : 오지 데이터르 읽기만 한다.
+- Writer : 읽기도 하고 데이터를 쓰기도 한다.
+
+문제 : 복수의 Reader가 동시에 데이터셋에 접근할 수 있다.
+- Writer가 접근할 때에는 혼자서만 접근할 수 있어야 한다.
+- 만약 Writer가 데이터셋을 업데이트 하고 있는 와중에 접근하면 다른 상태의 데이터셋을 읽을 것이기 때문이다.
+
+Shared Data
+- Datat set
+- read_count, 초기값은 0
+- rw_mutex, 초기값은 1
+- mutex, 초기값은 1
+
+Writer process
+```c
+do{
+   wait(rw_mutex);
+   /* writing process */
+   signal(rw_mutex);
+}while(true)
+```
+
+Reader process
+```c
+do{
+   /* read_count에 접근한 프로세스가 있는 지 확인 */
+   wait(mutex);
+   read_count++;
+   
+   /* 내가 처음 읽기로 접근하느 프로세스라면? */
+   if (read_count == 1)
+      wait(rw_mutex); // Writer가 쓰기 중인지 확인한다.
+ 
+   signal(mutex);
+   
+   /*  reading process */
+   
+   wait(mutex);
+   read_count--;
+   
+   /* 내가 마지막인 Reader 프로세스라면?*/
+   if (read_count == 0)
+      signal(rw_mutex); // Writer가 쓰기 가능한 상태라고 알림.
+   signal(mutex);
+}while(true)
+```
+
