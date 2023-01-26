@@ -77,3 +77,6 @@ do{
 }while(true)
 ```
 
+> 참고
+> 
+> Abraham Silberschatz, Peter B. Galvin, Greg Gagne의 『Operating System Concept 10th』
